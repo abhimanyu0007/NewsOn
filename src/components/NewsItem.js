@@ -6,7 +6,7 @@ export class NewsItem extends Component {
         return (
             <div className="my-3">
                 <div className="card" style={{background: 'black'}}>
-                    <img src={imageUrl==="None"?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnwVoZ1Gm4M0iyL6nPI2goFi5olJ2jdJSRvg&usqp=CAU":imageUrl} className="card-img-top" alt="..."/>
+                    <img style={{height:"180px"}} src={imageUrl==="None"?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnwVoZ1Gm4M0iyL6nPI2goFi5olJ2jdJSRvg&usqp=CAU":imageUrl} className="card-img-top" alt="..."/>
                     <div className ="card-body" style={{background: '#2e2a5e'}}>
                     <h5 className ="card-title" style={{color: 'white'}}>{title} <span className="badge rounded-pill bg-warning text-dark">{source}</span></h5>
                     <p className ="card-text" style={{color: 'white'}}>{description}...</p>
