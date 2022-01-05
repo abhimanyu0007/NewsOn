@@ -11,7 +11,7 @@ import {
 import LoadingBar from 'react-top-loading-bar'
 
 const App= ()=> {
-  const apiKey= process.env.REACT_APP_NEWS_API
+  const apiKey= process.env.apiKey
   const [progress, setProgress] = useState(10)
   const [country, setCountry] = useState('AU')
   const [countryName, setCountryName] = useState('NewsOn')

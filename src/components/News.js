@@ -31,7 +31,7 @@ const News= (props) =>{
     useEffect(() => {
         const updateNews = async ()=>{
             props.setProgress(10);
-            const url = `https://api.currentsapi.services/v1/search/?country=${props.country}&language=en&category=${props.category}&apiKey=kDXbsms2DfRmMFpZwAZAjFzyNEqf9BaQ2KqWHqskd8Une1Kk&page_size=40`
+            const url = `https://api.currentsapi.services/v1/search/?country=${props.country}&language=en&category=${props.category}&apiKey=${props.apiKey}&page_size=40`
             setLoading(true)
             let data = await fetch(url);
             props.setProgress(30);
