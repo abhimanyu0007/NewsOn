@@ -1,102 +1,78 @@
-import React, { Component } from 'react'
+import React, {useEffect, useState} from 'react'
 import NewsItem from './NewsItem'
 import Spinner from './Spinner';
-import PropTypes from 'prop-types'
-import InfiniteScroll from "react-infinite-scroll-component";
 
-export class News extends Component {
-    static defaultProps = {
-        country: 'in',
-        pageSize: 8,
-        category: 'general',
+const News= (props) =>{
+
+    const [news, setNews] = useState([])
+    const [loading, setLoading] = useState(true)
+    
+    const capitalize = (string) => {
+        return (string.charAt(0).toUpperCase() + string.slice(1))
     }
 
-    static propTypes = {
-        country: PropTypes.string,
-        pageSize: PropTypes.number,
-        category: PropTypes.string,
-    }
-    capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    constructor(props) {
-        super(props);
-        this.state = {
-            articles: [],
-            loading: true,
-            page: 1,
-            totalResults: 0
+    
+    
+    // const updateNews =  async()=> {
+    //     props.setProgress(10);
+    //     const url = `https://api.currentsapi.services/v1/latest-news/?country=in&category=${props.category}&apiKey=${props.apiKey}&page_size=40`
+    //     this.setState({ loading: true });
+    //     let data = await fetch(url);
+    //     props.setProgress(30);
+    //     let parsedData = await data.json();
+    //     props.setProgress(70);
+
+    //     setNews(parsedData.news)
+    //     setLoading(false)
+
+    //     props.setProgress(100);
+    // }
+    
+    useEffect(() => {
+        const updateNews = async ()=>{
+            props.setProgress(10);
+            const url = `https://api.currentsapi.services/v1/search/?country=${props.country}&language=en&category=${props.category}&apiKey=${props.apiKey}&page_size=40`
+            setLoading(true)
+            let data = await fetch(url);
+            props.setProgress(30);
+            let parsedData = await data.json();
+            props.setProgress(70);
+
+            setNews(parsedData.news)
+            setLoading(false)
+
+            props.setProgress(100);
+            
         }
-        document.title = `${this.capitalizeFirstLetter(this.props.category)} - NewsMonkey`;
-    }
-
-    async updateNews() {
-        this.props.setProgress(10);
-        const url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=05a268f2832b4dd8b0218fe6c47bd754`;
-        this.setState({ loading: true });
-        let data = await fetch(url);
-        this.props.setProgress(30);
-        let parsedData = await data.json()
-        this.props.setProgress(70);
-        this.setState({
-            articles: parsedData.articles,
-            totalResults: parsedData.totalResults,
-            loading: false, 
-        })
-        this.props.setProgress(100);
-
-    }
-    async componentDidMount() {
-        this.updateNews();
-    }
-
-    handlePrevClick = async () => {
-        this.setState({ page: this.state.page - 1 });
-        this.updateNews();
-    }
-
-    handleNextClick = async () => {
-        this.setState({ page: this.state.page + 1 });
-        this.updateNews()
-    }
-
-    fetchMoreData = async () => {  
-        this.setState({page: this.state.page + 1})
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=05a268f2832b4dd8b0218fe6c47bd754&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-        let data = await fetch(url);
-        let parsedData = await data.json()
-        this.setState({
-            articles: this.state.articles.concat(parsedData.articles),
-            totalResults: parsedData.totalResults
-        })
-      };
-
-    render() {
-        return (
-            <>
-                <h1 className="text-center" style={{ margin: '35px 0px' }}>NewsMonkey - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h1>
-                {this.state.loading && <Spinner />}
-                <InfiniteScroll
-                    dataLength={this.state.articles.length}
-                    next={this.fetchMoreData}
-                    hasMore={this.state.articles.length !== this.state.totalResults}
-                    loader={<Spinner/>}
-                > 
-                    <div className="container">
-                         
+        updateNews();
+        //eslint-disable-next-line
+    }, [])
+    
+    return (
+        <>
+            <h1 className="text-center" style={{ margin: '22px 0px',marginTop:'87px', color: 'white' }}>{props.countryName} - Top {capitalize(props.category)} Headlines</h1>
+            {loading && <Spinner/>}       
+                    <div className="container-fluid" style={{padding:'0px 40px'}}>     
                     <div className="row">
-                        {this.state.articles.map((element) => {
-                            return <div className="col-md-4" key={element.url}>
-                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
-                            </div>
-                        })}
+                        {news.map((element) => {
+                            return <div className="col-md-3" key={element.url}>
+                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description.slice(0, 88) : ""} imageUrl={element.image}
+                                    newsUrl={element.url} author={element.author} date={element.published} source={element.author} />
+                                </div>
+                            })}
                     </div>
-                    </div> 
-                </InfiniteScroll>
-
-            </>
-        )
-    }
+                    </div>
+            {loading===false && news.length===0?
+            <div className="container-sm bg-info animate__animated animate__zoomInDown" 
+            style={{width:"306px",borderRadius:"7px",height:"88px",marginTop:"50px"}}>
+            <h4 style={{color:"#b5142b",textDecoration:"underline"}}>NO NEWS AVAILABLE!</h4>
+            <h5 style={{color:"white"}}>Try with general category or other country.</h5>
+            </div>
+            :
+            ""
+            }
+                    
+        </>
+    )
 }
-
 export default News
