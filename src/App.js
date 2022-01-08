@@ -26,7 +26,7 @@ const App= ()=> {
         />
         
         <Switch>
-          <Route exact path="/world">
+          <Route exact path="/">
             <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="world" category="world"/>
           </Route>
           <Route exact path="/business">

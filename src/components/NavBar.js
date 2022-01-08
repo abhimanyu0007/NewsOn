@@ -141,7 +141,7 @@ const NavBar = (props)=> {
                         <button className="navbar-toggler" style={{margin:"0px 0px 0px -5px"}} type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <Link className="navbar-brand d-flex justify-content-start" to="/world">NewsOn
+                        <Link className="navbar-brand d-flex justify-content-start" to="/">NewsOn
                         </Link>
                         <div className="offcanvas offcanvas-start w-75" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
 
@@ -151,13 +151,13 @@ const NavBar = (props)=> {
                       </div>
                       <div className="offcanvas-body bg-dark">
                         <ul className="navbar-nav justify-content-start flex-grow-1 pe-3">
-                        <li className="nav-item"><Link className="nav-link active" aria-current="page" to="/world">Home</Link></li>
+                        <li className="nav-item"><Link className="nav-link active" aria-current="page" to="/">Home</Link></li>
                              <li className="nav-item dropdown">
                           <a className="nav-link dropdown-toggle active" id="navbarScrollingDropdown" href="/" data-bs-display="static" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Country
                           </a>
                           <ul className="dropdown-menu dropdown-menu-dark navbar-nav-scroll" aria-labelledby="navbarScrollingDropdown" id="navbarScroll" style={{maxHeight: '300px',overflowY:"auto"}}>
-                          <li><Link className="dropdown-item" to="/general" onClick={handleIN} >India</Link></li>
+                          <li><Link className="dropdown-item" to="/technology" onClick={handleIN} >India</Link></li>
                           <li><Link className="dropdown-item" to="/business" onClick={handleUS} >United States</Link></li>
                           <li><Link className="dropdown-item" to="/entertainment" onClick={handleUK} >United Kingdom</Link></li>
                           <li><Link className="dropdown-item" to="/health" onClick={handleAU} >Australia</Link></li>
@@ -200,7 +200,7 @@ const NavBar = (props)=> {
                           <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                           <button className="btn btn-outline-success" type="submit">Search</button>
                         </form>
-                        
+
                         </div>
                     </div>
                     </div>
