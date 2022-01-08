@@ -2,7 +2,6 @@ import './App.css';
 import React,{useState} from 'react'
 import NavBar from './components/NavBar';
 import News from './components/News';
-//import Navbar from 'react-bootstrap/Navbar';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,7 +10,7 @@ import {
 import LoadingBar from 'react-top-loading-bar'
 
 const App= ()=> {
-  const apiKey= process.env.api_Key
+  const apiKey= process.env.REACT_APP_NEWS_API
   const [progress, setProgress] = useState(10)
   const [country, setCountry] = useState('IN')
   const [countryName, setCountryName] = useState('NewsOn')
@@ -27,8 +26,8 @@ const App= ()=> {
         />
         
         <Switch>
-          <Route exact path="/">
-            <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="general" category="general"/>
+          <Route exact path="/world">
+            <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="world" category="world"/>
           </Route>
           <Route exact path="/business">
             <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="business" category="business"/>
@@ -50,6 +49,18 @@ const App= ()=> {
           </Route>
           <Route exact path="/technology">
             <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="technology" category="technology"/>
+          </Route>
+          <Route exact path="/politics">
+            <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="politics" category="politics"/>
+          </Route>
+          <Route exact path="/travel">
+            <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="travel" category="travel"/>
+          </Route>
+          <Route exact path="/environment">
+            <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="environment" category="environment"/>
+          </Route>
+          <Route exact path="/education">
+            <News setProgress={setProgress} countryName={countryName} country={country} apiKey={apiKey} key="education" category="education"/>
           </Route>
         </Switch>
       </Router>
